@@ -7,7 +7,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const SupabaseQuery = () => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState('');
+  const [results, setResults] = useState([]);
 
   const executeQuery = async () => {
     const filterConditions = query.split(' ').filter(Boolean);
@@ -17,8 +17,6 @@ const SupabaseQuery = () => {
       const column = filterConditions[i];
       const operator = filterConditions[i + 1];
       let value = filterConditions[i + 2];
-
-      console.log(column + " | " + operator + " | " + value);
 
       if (value.startsWith("'") && value.endsWith("'")) {
         value = value.slice(1, -1);
@@ -53,23 +51,66 @@ const SupabaseQuery = () => {
 
     const { data, error } = await supabaseQuery;
     if (error) {
-      setResults(`Error: ${error.message}`);
+      setResults([{ error: error.message }]);
     } else {
-      setResults(JSON.stringify(data, null, 2));
+      setResults(data);
     }
   };
 
   return (
     <div>
-      <h1>Task Query Interface</h1>
+      <h1>SQL Query Interface</h1>
       <textarea
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Enter your filter condition here..."
+        rows="4"
+        cols="60"
       />
+      <br/>
       <button onClick={executeQuery}>Execute Query</button>
       <div id="results" style={{ whiteSpace: 'pre-line', border: '1px solid #ccc', padding: '10px', marginTop: '10px' }}>
-        {results}
+        {results.length > 0 && (
+          <table>
+            <thead>
+              <tr>
+                <th style={{ width: "4%"}}>id</th>
+                <th style={{ width: "10%"}}>node_id</th>
+                <th style={{ width: "10%"}}>round_id</th>
+                <th style={{ width: "30%"}}>most viewed</th>
+                <th style={{ width: "30%"}}>most read</th>
+                <th style={{ width: "13%"}}>signature</th>
+                <th style={{ width: "13%"}}>timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map((result, index) => (
+                <tr key={index}>
+                  <td>{result.id}</td>
+                  <td>{result.node_id}</td>
+                  <td>{result.round_id}</td>
+                  <td>
+                    <ol>
+                      {result.most_viewed.map((article, i) => (
+                        <li key={i}>{article}</li>
+                      ))}
+                    </ol>
+                  </td>
+                  <td>
+                    <ol>
+                      {result.most_read.map((article, i) => (
+                        <li key={i}>{article}</li>
+                      ))}
+                    </ol>
+                  </td>
+                  <td>{result.signature}</td>
+                  <td>{new Date(result.timestamp).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {results.length === 0 && <p>No results found</p>}
       </div>
     </div>
   );
