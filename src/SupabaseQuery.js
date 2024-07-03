@@ -59,7 +59,7 @@ const SupabaseQuery = () => {
 
   return (
     <div>
-      <h1>SQL Query Interface</h1>
+      <h1>Explorer</h1>
       <textarea
         value={query}
         onChange={(e) => setQuery(e.target.value)}
