@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Timeline</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .timeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      padding: 10px;
+      position: relative;
+      height: 300px;
+    }
+    .article {
+      position: absolute;
+      white-space: nowrap;
+      transition: transform 0.3s;
+    }
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider {
+      margin: 0 10px;
+    }
+    .play-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Article Timeline</h1>
+  <div class="timeline-container">
+    <div class="timeline" id="timeline"></div>
+    <div class="controls">
+      <input type="range" min="0" max="100" value="0" class="slider" id="slider">
+      <button class="play-button" id="playButton">Play</button>
+    </div>
+  </div>
+  <script>
+    const articles1 = [
+      "General election live: Sunak says he will take full responsibility for election result after Tory minister predicts Labour landslide",
+      "Cracks showing in Democratic support as Biden says he ‘nearly fell asleep on stage’",
+      "Rishi Sunak fearful of losing his seat, sources say",
+      "Captain Tom’s daughter and her husband banned from being charity trustees",
+      "Disastrous fruit and vegetable crops must be ‘wake-up call’ for UK, say farmers",
+      "An (incomplete) list of every terrible policy the Conservatives have inflicted on Britain since 2010",
+      "Tactical voting could wipe the Tories out for a generation. Here’s how I think it should be done",
+      "‘To be totally the focus of someone, who was really into sex, was fantastic’: Tracey Emin and Billy Childish on their blazing romance",
+      "Sparks fly as M&S says no to a plastic loyalty card",
+      "London student died in ‘tragic accident’ at West Wittering beach, says principal"
+    ];
+
+    const articles2 = [
+      "Second Reform candidate quits, accusing party of ‘racism and misogyny’",
+      "Keir Starmer pledges to avoid constant reshuffles if he becomes PM, saying he wants ‘stability’ – UK general election live",
+      "Lucy Letby found guilty of trying to kill two-hour-old baby",
+      "When Sunak called an election, Labour was 22 points ahead. Has anything changed?",
+      "Romania v Netherlands: Euro 2024, last 16 – live",
+      "‘Waiting in the wings’: as Biden stumbles, Gavin Newsom’s name is on everyone’s lips",
+      "Over 200 candidates withdraw before second round of voting – France election live",
+      "A scrum of spectators and an elephant in the room during Lucy Letby retrial",
+      "Woman who died at slapping therapy retreat viewed healer as ‘sent by God’, court told",
+      "‘Really desperate’: Starmer hits back at Tory attacks on his work hours"
+    ];
+
+    const articles = [...articles1, ...articles2];
+    const timeline = document.getElementById('timeline');
+    const slider = document.getElementById('slider');
+    const playButton = document.getElementById('playButton');
+    let isPlaying = false;
+    let playInterval;
+
+    // Create and style article elements
+    articles.forEach((article, index) => {
+      const articleElement = document.createElement('div');
+      articleElement.classList.add('article');
+      articleElement.style.top = `${index * 30}px`;
+      articleElement.style.backgroundColor = `hsl(${index * 36}, 70%, 80%)`;
+      articleElement.textContent = article;
+      timeline.appendChild(articleElement);
+    });
+
+    const updateTimeline = (value) => {
+      const articleElements = document.querySelectorAll('.article');
+      articleElements.forEach((article, index) => {
+        article.style.transform = `translateX(${value - index * 10}%)`;
+      });
+    };
+
+    slider.addEventListener('input', (e) => {
+      updateTimeline(e.target.value);
+    });
+
+    playButton.addEventListener('click', () => {
+      if (isPlaying) {
+        clearInterval(playInterval);
+        playButton.textContent = 'Play';
+      } else {
+        playInterval = setInterval(() => {
+          let currentValue = parseInt(slider.value, 10);
+          if (currentValue < 100) {
+            slider.value = currentValue + 1;
+            updateTimeline(currentValue + 1);
+          } else {
+            clearInterval(playInterval);
+            playButton.textContent = 'Play';
+          }
+        }, 300);
+        playButton.textContent = 'Pause';
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
+</body>
+</html>
