@@ -57,6 +57,8 @@ const SupabaseQuery = () => {
     }
   };
 
+  executeQuery();
+
   return (
     <div>
       <h1>Explorer</h1>
