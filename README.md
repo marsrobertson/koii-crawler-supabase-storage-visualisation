@@ -1,3 +1,57 @@
+The purpose of this repo is to crawl + store + visualise the result of the Koii task.
+
+Balancing act:
+- features
+- appealing look
+- meta: appealing look being a feature
+
+Ability to see the results of the task = useful
+Ability to combine the results over time and see it on a timeline = useful
+
+_(this is contrary to manually digging into the block explorer to see the results of a task)_
+
+### Requirements
+
+Supabase: https://supabase.com/
+
+**TODO:** Export database schema with associated permissions (append only, publicly viewable)
+
+**RELATED**: question on Slack about best practices of storing historical data (from previous rounds) for the ease of retrieval and visualising: https://koii-workspace.slack.com/archives/C06RE53NNKC/p1720075748981719
+
+### How to run the explorer
+
+* `git clone git@github.com:marsrobertson/koii-crawler-supabase-storage-visualisation.git`
+* `npm install`
+* `npm start`
+
+### How to run the crawler
+
+* `cd ADDONS`
+* `npm install puppeteer @supabase/supabase-js axios crypto @_koi/web3.js nedb-promises fs/promises bs58 tweetnacl express dotenv body-parser`
+* `node crawler`
+
+It should open the automated Chrome to scrape https://www.theguardian.com/uk for the list of trending articles.
+
+### How to run the visualisation
+
+**NOTE:** currently the visualisation is using the dummy data, it is not plugged in to the database.
+
+Just open `ADDONS/jockeying.html` in the web browser
+
+### Known issues
+
+The explorer text area does not have robust error handling (not a priority). It simply expects a query like `round_id = 3` that uses spaces as a separator between the parts:
+
+```const filterConditions = query.split(' ').filter(Boolean);
+const column = filterConditions[i];
+const operator = filterConditions[i + 1];
+const value = filterConditions[i + 2];
+```
+
+------
+
+Default readme from `npx create-react-app` starts here
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
