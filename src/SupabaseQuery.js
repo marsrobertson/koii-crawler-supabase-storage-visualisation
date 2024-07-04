@@ -73,7 +73,7 @@ const SupabaseQuery = () => {
       />
       <br/>
       <button onClick={executeQuery}>Execute Query</button>
-      <div id="results" style={{ whiteSpace: 'pre-line', border: '1px solid #ccc', padding: '10px', marginTop: '10px' }}>
+      <div id="results" style={{ whiteSpace: 'pre-line', border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
         {results.length > 0 && (
           <table>
             <thead>
