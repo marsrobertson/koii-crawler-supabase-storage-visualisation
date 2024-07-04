@@ -1,4 +1,4 @@
-The purpose of this repo is to crawl + store + visualise the result of the Koii task.
+The purpose of this repo is to crawl + store + visualise the result of a Koii task.
 
 Balancing act:
 - features
@@ -16,13 +16,17 @@ Supabase: https://supabase.com/
 
 **TODO:** Export database schema with associated permissions (append only, publicly viewable)
 
-**RELATED**: question on Slack about best practices of storing historical data (from previous rounds) for the ease of retrieval and visualising: https://koii-workspace.slack.com/archives/C06RE53NNKC/p1720075748981719
+![](./readme_images/supabase-permissions.png)
+
+**RELATED**: [question on Slack](https://koii-workspace.slack.com/archives/C06RE53NNKC/p1720075748981719) about best practices of storing historical data (from previous rounds) for the ease of retrieval and visualising.
 
 ### How to run the explorer
 
 * `git clone git@github.com:marsrobertson/koii-crawler-supabase-storage-visualisation.git`
 * `npm install`
 * `npm start`
+
+![](./readme_images/explorer.png)
 
 ### How to run the crawler
 
@@ -36,7 +40,9 @@ It should open the automated Chrome to scrape https://www.theguardian.com/uk for
 
 **NOTE:** currently the visualisation is using the dummy data, it is not plugged in to the database.
 
-Just open `ADDONS/jockeying.html` in the web browser
+Just open `ADDONS/jockeying.html` in the web browser:
+
+![](./readme_images/jockeying.gif)
 
 ### Known issues
 
