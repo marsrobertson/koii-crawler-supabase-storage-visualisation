@@ -1,11 +1,14 @@
-The purpose of this repo is to crawl + store + visualise the result of a Koii task.
+# crawl + store + visualise
+
+The purpose of this repo is to **crawl + store + visualise** the result of a Koii task.
 
 Balancing act:
 - features
 - appealing look
 - meta: appealing look being a feature
 
-Ability to see the results of the task = useful
+Ability to see the results of the task = useful.
+
 Ability to combine the results over time and see it on a timeline = useful
 
 _(this is contrary to manually digging into the block explorer to see the results of a task)_
@@ -14,13 +17,13 @@ _(this is contrary to manually digging into the block explorer to see the result
 
 Supabase: https://supabase.com/
 
-**TODO:** Export database schema with associated permissions (append only, publicly viewable)
+**TODO:** Export database schema with associated permissions _(append only, publicly viewable)_
 
 ![](./readme_images/supabase-permissions.png)
 
-**RELATED**: [question on Slack](https://koii-workspace.slack.com/archives/C06RE53NNKC/p1720075748981719) about best practices of storing historical data (from previous rounds) for the ease of retrieval and visualising.
+**RELATED**: [question on Slack](https://koii-workspace.slack.com/archives/C06RE53NNKC/p1720075748981719) about best practices of storing historical data _(from previous rounds)_ for the ease of retrieval and visualising.
 
-### How to run the explorer
+### 1️⃣ How to run the explorer
 
 * `git clone git@github.com:marsrobertson/koii-crawler-supabase-storage-visualisation.git`
 * `npm install`
@@ -28,15 +31,14 @@ Supabase: https://supabase.com/
 
 ![](./readme_images/explorer.png)
 
-### How to run the crawler
+### 2️⃣ How to run the crawler
 
 * `cd ADDONS`
-* `npm install puppeteer @supabase/supabase-js axios crypto @_koi/web3.js nedb-promises fs/promises bs58 tweetnacl express dotenv body-parser`
 * `node crawler`
 
-It should open the automated Chrome to scrape https://www.theguardian.com/uk for the list of trending articles.
+It should open the automated Chromium to scrape https://www.theguardian.com/uk for the list of trending articles.
 
-### How to run the visualisation
+### 3️⃣ How to run the visualisation
 
 **NOTE:** currently the visualisation is using the dummy data, it is not plugged in to the database.
 
@@ -48,15 +50,17 @@ Just open `ADDONS/jockeying.html` in the web browser:
 
 The explorer text area does not have robust error handling (not a priority). It simply expects a query like `round_id = 3` that uses spaces as a separator between the parts:
 
-```const filterConditions = query.split(' ').filter(Boolean);
+```
+const filterConditions = query.split(' ').filter(Boolean);
 const column = filterConditions[i];
 const operator = filterConditions[i + 1];
 const value = filterConditions[i + 2];
 ```
 
 ------
-
 Default readme from `npx create-react-app` starts here
+------
+
 
 # Getting Started with Create React App
 
